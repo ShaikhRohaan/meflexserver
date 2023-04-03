@@ -1,27 +1,75 @@
 {
-  "name": "meflex-wallet",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
-  "author": "",
-  "license": "ISC",
+  "name": "metamask",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://sbgwallet.io/",
   "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
+    "@metamask/logo": "^3.1.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "alchemy-sdk": "^2.3.0",
+    "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
-    "bip39": "^3.1.0",
-    "body-parser": "^1.20.2",
+    "big-number": "^2.0.0",
+    "bip39": "^3.0.4",
+    "body-parser": "^1.20.1",
+    "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ethereum-mnemonic-privatekey-utils": "^1.0.5",
-    "ethers": "^6.2.3",
+    "ethereumjs-wallet": "^1.0.2",
+    "ethers": "^6.0.0",
     "express": "^4.18.2",
     "hdkey": "^2.1.0",
+    "jquery": "^3.6.4",
     "jsonwebtoken": "^9.0.0",
+    "mnemonic-words": "^1.1.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.22",
-    "web3": "^1.9.0"
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.2",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
+    "react-scripts": "5.0.1",
+    "stream": "^0.0.2",
+    "sweetalert2": "^11.7.2",
+    "sweetalert2-react-content": "^5.0.7",
+    "web-vitals": "^2.1.4",
+    "web3": "^1.2.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.32.0"
   }
 }
