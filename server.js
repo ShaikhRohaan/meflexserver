@@ -8,11 +8,15 @@ var cors = require('cors');
 const { query } = require('express');
 const {ethers,JsonRpcProvider , formatEther, parseUnits, isAddress} = require("ethers");
 require('dotenv').config();
-
+const http = require("http");
 const bip39 = require('bip39');
 const pkutils = require('ethereum-mnemonic-privatekey-utils');
 const Web3 = require('web3');
 const hdkey = require('hdkey');
+const { cp } = require('fs');
+
+
+
 
 const JWT_SECRETKEY = (process.env.REACT_APP_SECRET_KEY) 
 const JWT_PASSWORDKEY = (process.env.REACT_APP_PASSWORD_KEY)
@@ -27,7 +31,7 @@ app.use(bodyParser.urlencoded({
 // console.log(JWT_SECRETKEY);
 
 // var connection = mysql.createConnection({
-//     host: 'localhost',
+//     host: '167.172.106.122',
 //     user: 'root',
 //     password: '',
 //     database: 'wallet_data'
@@ -1476,7 +1480,7 @@ web3.eth.accounts.signTransaction(transactionObject, PRIVATE_KEY)
 //     }
 //               ];
 
-// // const provider = new JsonRpcProvider("https://bsc-dataseed.binance.org/"); // Connect to Ropsten testnet
+// // const provider = new JsonRpcProvider("https://bsc.publicnode.com"); // Connect to Ropsten testnet
 // const provider = new JsonRpcProvider(rpc);
 // const wallet = new ethers.Wallet(privateKey, provider);
 // const amountConvert = parseUnits(amount,18)
@@ -2254,7 +2258,7 @@ web3.eth.accounts.signTransaction(transactionObject, PRIVATE_KEY)
 //       }
 //                 ];
   
-//   // const provider = new JsonRpcProvider("https://bsc-dataseed.binance.org/"); // Connect to Ropsten testnet
+//   // const provider = new JsonRpcProvider("https://bsc.publicnode.com"); // Connect to Ropsten testnet
 //   const provider = new Web3(rpc);
 //   const wallet = new ethers.Wallet(privateKey, provider);
 //   const amountConvert = parseUnits(amount,18)
@@ -2445,23 +2449,118 @@ else{
 }
 });
 
-app.post("/swapf3", async (req, res) => {
-  console.log('Swapppppp');
+// app.post("/swapf3", async (req, res) => {
+// console.log('Swap Native to NonNative');
+//   try{
+//   var gass = 371938;
+//   var privateKey = req.body.privateKey;
+//   var amount = req.body.inputAmount;
+//   // privateKey = "0x".concat(privateKey);
+//   console.log(privateKey)
+//   const web3 = new Web3('https://bsc.publicnode.com');
+// //const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+// const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+// console.log(account.address);
+// const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+// const pancakeSwapABI = require('./abi.json');
+// const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
+// const inputTokenAddress = req.body.inToken;
+// const outputTokenAddress = req.body.outToken;
+// const inputAmount = web3.utils.toWei(amount, 'ether');
+// const minOutputAmount = web3.utils.toWei('0', 'ether');
+// //// approval part
+// const tokenabi = require('./abif3.json');
+// const tokencontract = new web3.eth.Contract(tokenabi, inputTokenAddress);
+// web3.eth.accounts.wallet.add(privateKey);
+// try{
+// const approves = await tokencontract.methods
+//      .approve(
+//       pancakeSwapAddress,
+//       inputAmount
+//     )
+//    .send({ from: account.address, gasLimit: 275833 });
+//     console.log(approves.transactionHash)
+//   }
+//   catch(err){
+//    return res.status(401).send("Insufficient funds");
+
+//   }
+// /////
+// console.log(inputAmount,minOutputAmount)
+
+// const swapData = pancakeSwapContract.methods.swapExactTokensForTokens(
+//     inputAmount,
+//     minOutputAmount,
+//     [inputTokenAddress, outputTokenAddress],
+//     account.address,
+//     Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
+//   ).encodeABI();
+
+
+//   var block = await web3.eth.getBlock("latest");
+
+// var gasLimit = Math.round(block.gasLimit / block.transactions.length);
+// // console.log(block,gasLimit)
+// var tx = {
+//     gas: gasLimit,
+//     to: pancakeSwapAddress,
+//     data: swapData
+// }
+// web3.eth.accounts.wallet.add(privateKey);
+//   try{
+//    const swapTransaction = await pancakeSwapContract.methods
+//      .swapExactTokensForTokens(
+//        inputAmount,
+//        minOutputAmount,
+//        [inputTokenAddress,outputTokenAddress],
+//        account.address,
+//        Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
+//     )
+//    .send({ from: account.address, gasLimit: gass });
+//   console.log(swapTransaction.transactionHash)
+//     res.status(200).send("Swap Successful")
+//      }
+//      catch(error){
+//       console.log("error hai",error)
+//       return res.status(401).send("Insufficient Funds")
+//      }
+//     }
+//     catch(err){
+//       return res.status(400).send("Insufficient Funds")
+//     }
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+app.post("/swap2token", async (req, res) => {
+  console.log('Swap NonNative to NonNative');
+  console.log(req.body.inToken)
+  console.log(req.body.outToken)
     try{
     var gass = 371938;
     var privateKey = req.body.privateKey;
     var amount = req.body.inputAmount;
     // privateKey = "0x".concat(privateKey);
-    console.log(privateKey)
-    const web3 = new Web3('https://bsc-dataseed.binance.org/');
+    // console.log(privateKey)
+    const web3 = new Web3('https://bsc.publicnode.com');
   //const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-  console.log(account.address);
+  // console.log(account.address);
   const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
   const pancakeSwapABI = require('./abi.json');
   const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
-  const inputTokenAddress = req.body.inToken;
-  const outputTokenAddress = req.body.outToken;
+  const inputTokenAddress = '0x9767c8E438Aa18f550208e6d1fDf5f43541cC2c8';
+  const outputTokenAddress = '0xa03110800894b3CcF8723D991d80875561F96777';
   const inputAmount = web3.utils.toWei(amount, 'ether');
   const minOutputAmount = web3.utils.toWei('0', 'ether');
   //// approval part
@@ -2486,8 +2585,8 @@ app.post("/swapf3", async (req, res) => {
   
   const swapData = pancakeSwapContract.methods.swapExactTokensForTokens(
       inputAmount,
-      minOutputAmount,
-      [inputTokenAddress, outputTokenAddress],
+      0,
+      [inputTokenAddress,'0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', outputTokenAddress],
       account.address,
       Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
     ).encodeABI();
@@ -2506,13 +2605,13 @@ app.post("/swapf3", async (req, res) => {
     try{
      const swapTransaction = await pancakeSwapContract.methods
        .swapExactTokensForTokens(
-         inputAmount,
-         minOutputAmount,
-         [inputTokenAddress,outputTokenAddress],
-         account.address,
+        inputAmount,
+      0,
+      [inputTokenAddress,'0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', outputTokenAddress],
+      account.address,
          Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
       )
-     .send({ from: account.address, gasLimit: gass });
+     .send({ from: account.address, gasLimit: 545887 });
     console.log(swapTransaction.transactionHash)
       res.status(200).send("Swap Successful")
        }
@@ -2527,167 +2626,227 @@ app.post("/swapf3", async (req, res) => {
   
   })
   
-  app.post("/nonNativetoNative", async (req, res) => { 
-    //ye BNB to MMIT wala h hai? ha bs mmit ki jagha address change ho raha hy
-    console.log('SwappppppNative');
-    var Key = req.body.privateKey
-    var Url = req.body.uri
-    var Ammount = req.body.inputAmount
-    var gass = 371938;
-    
-    // var addressFrom = '0x9767c8E438Aa18f550208e6d1fDf5f43541cC2c8'
-    var addressTo = req.body.outToken
 
-    console.log(Key);
-    console.log(Url);
-    console.log(Ammount);
-    // console.log(addressFrom);
-    // there?
-    console.log(addressTo);
-    try
-    {
-    var privateKey = Key;
-    var amount = Ammount;
-    // privateKey = "0x".concat(privateKey);
-    const web3 = new Web3(Url);
-    // const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
-    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-    console.log("Account Address 123 " +account.address);
-    const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
-    const pancakeSwapABI = require('./abi.json');
-    const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
-    // const inputTokenAddress = req.body.inToken;
-    // const outputTokenAddress = req.body.outToken;
-    const inputAmount = web3.utils.toWei(amount, 'ether');
-    const minOutputAmount = web3.utils.toWei('0', 'ether');
-    //// approval part
-    const tokenabi = require('./abif3.json'); //same isseu
-    
-    
-    const swapData = pancakeSwapContract.methods.swapExactETHForTokens(
-        minOutputAmount,
-        ['0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',addressTo],
-        account.address,
-        Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
-    ).encodeABI();
-    
-    
-    var block = await web3.eth.getBlock("latest");
-    
-    var gasLimit = Math.round(block.gasLimit / block.transactions.length);
-    console.log("Gas fee "+gasLimit)
-    // console.log(block,gasLimit)
-    var tx = {
-      gas: gasLimit,
-      to: pancakeSwapAddress,
-      data: swapData
-    }
-    web3.eth.accounts.wallet.add(privateKey);
-    try{
-      //hit krna api chalao ab ok
-     const swapTransaction = await pancakeSwapContract.methods
-       .swapExactETHForTokens(
-        
-         minOutputAmount,
-         ['0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',addressTo],
-         account.address,
-         Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
-      )
-     .send({ from: account.address, gasLimit: gass,value : inputAmount });
-      console.log(swapTransaction.transactionHash)
-      res.status(200).send("Swap Successful"+swapTransaction.transactionHash)
-       }
-       catch(error){
-        console.log("error hai",error)
-        console.log(error)
-        return res.status(400).send(error.message)
-       }
-      }
-      catch(err){
-        console.log(error)
-        return res.status(400).send(error.message)
-      }
-  });
+
+app.post("/nonNativetoNative", async (req, res) => {
+  console.log('Swap NonNative to native')
+
+  var Key = req.body.privateKey
+  var Url = req.body.uri
+  const web3 = new Web3(Url);
+
+  var addressTo = req.body.outToken
+  var addressFrom = req.body.inToken
+  var Ammount = req.body.inputAmount 
+  if(addressFrom == '0x9A2478C4036548864d96a97Fbf93f6a3341fedac')
+  var Gwei = Ammount * 1000000000
+  else
+  var Gwei =  web3.utils.toWei(Ammount, 'ether');
+
+  console.log(Gwei)
+  // const Ammount = web3.utils.toWei(input , 'ether');
+  var gass = 275833;
   
-  app.post("/swapf3ConversionAmount", async (req, res) => {
-    var uri = req.body.uri
-    var inToken = req.body.inToken
-    var outToken = req.body.outToken
-    var input = req.body.input
+  // var addressFrom = '0x9767c8E438Aa18f550208e6d1fDf5f43541cC2c8'
+  
+  if(addressTo === '0xa03110800894b3CcF8723D991d80875561F96777'){
+    gass = 1284404;
+  }else{
+    gass = 275833;
+  }
+  const tokenabi = require('./abif3.json');
+  const tokencontract = new web3.eth.Contract(tokenabi, addressFrom);
+  web3.eth.accounts.wallet.add(Key);
+  // console.log(Key);
+  // console.log(Url);
+  // console.log(Ammount);
+  console.log("In Token   "+addressFrom);
+  // there?
+  console.log("Out Token   "+addressTo);
+ try
+  {
+  var privateKey = Key;
+  var amount = Ammount;
+  // privateKey = "0x".concat(privateKey);
+  const web3 = new Web3(Url);
+  // const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+  const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  console.log("Account Address " +account.address);
+  const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+  const pancakeSwapABI = require('./abi.json');
+  const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
+  // const inputTokenAddress = req.body.inToken;
+  // const outputTokenAddress = req.body.outToken;
+  const inputAmount = web3.utils.toWei(amount, 'ether');
+  const minOutputAmount = web3.utils.toWei(amount, 'ether');
+  //// approval part
+  const tokenabi = require('./abif3.json'); 
+  
+  
+  
+  var block = await web3.eth.getBlock("latest");
+  var gasLimit = Math.round(block.gasLimit / block.transactions.length);  
+  // var gasLimit = gass;
+  console.log("Gas fee "+gasLimit)
+  // console.log(block,gasLimit)
+ 
+  web3.eth.accounts.wallet.add(privateKey);
+  if(addressFrom == '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c')
+  {
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+    console.log("rohan bharwa hai");
+
+    const swapTransaction = await pancakeSwapContract.methods
+    .swapExactETHForTokens(
+     0,
+      [addressFrom,addressTo],
+      account.address,
+      Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
+   )
+  .send({ from: account.address, gasLimit: 439362,value: inputAmount});
+  console.log(swapTransaction.transactionHash)
+  res.status(200).send("Swap Successful"+swapTransaction.transactionHash)
+  }
+  else{
+
+    console.log('Transaction Approve Run');
+    const approves = await tokencontract.methods
+    .approve(
+     pancakeSwapAddress,
+     Gwei
+   )
+  .send({ from: account.address, gasLimit: 275833 });
+   console.log(approves.transactionHash)
+
+    console.log('Transaction Send Run');
+   const swapTransaction = await pancakeSwapContract.methods
+     .swapExactTokensForETHSupportingFeeOnTransferTokens(
+      Gwei,
+      0,
+       [addressFrom,'0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'],
+       account.address,
+       Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
+    )
+   .send({ from: account.address, gasLimit: 439362 });
+    console.log(swapTransaction.transactionHash)
+    res.status(200).send("Swap Successful"+swapTransaction.transactionHash)
    
-    // console.log(uri  + " " + inToken + " " + outToken);
-  
-    try{
-    const web3 = new Web3(uri);
-  //const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
-    const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
-    const pancakeSwapABI = require('./abi.json');
-    const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
-    const inputTokenAddress = inToken;
-    const outputTokenAddress = outToken;
-    const inputAmount = web3.utils.toWei(input , 'ether');
-    const minOutputAmount = web3.utils.toWei('0', 'ether');
-  
-    const amounts = await pancakeSwapContract.methods.getAmountsOut(inputAmount, [inputTokenAddress, outputTokenAddress]).call();
-    const estimatedOutputAmount = amounts[1];
-    console.log("Amounts : "+web3.utils.fromWei(estimatedOutputAmount,'ether'))
-  
-    const gasPrice = await web3.eth.getGasPrice();
-    const gasFee = web3.utils.toBN(gasPrice).mul(web3.utils.toBN(21000));
-    console.log("Gas fee "+gasFee)
-  
-    const estimatedOutputAmountInEth = web3.utils.fromWei(estimatedOutputAmount, 'ether');
-    const gasFeeInEth = web3.utils.fromWei(gasFee, 'ether');
-    const totalCostInEth = parseFloat(estimatedOutputAmountInEth) + parseFloat(gasFeeInEth);
-    console.log(`Estimated output amount: ${estimatedOutputAmountInEth} USDT`);
-    console.log(`Gas fee: ${gasFeeInEth} BNB`);
-    console.log(`Total cost: ${totalCostInEth} BNB`);
-    const result = {
-      estimatedOutputAmount : estimatedOutputAmountInEth,
-      gasFee : gasFeeInEth,
-      totalCost : totalCostInEth
-    }
-  return res.status(200).send(result)
-      }
-      catch(err){
-        return res.status(400).send("Wrong Input")
-      }
-  
-  
-  
-  
-  
-  
-  
-  // try{
-  // const Web3 = require('web3');
-  // const web3 = new Web3('https://mainnet.infura.io/v3/8f99e25e35fb47be849213a3438a0c14');
-  
-  // const uniswapAbi = require('./uniswap-abi.json'); // Replace with the path to the ABI file
-  // const uniswapAddress = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'; // Replace with the address of the Uniswap exchange on the Ethereum network
-  // const uniswapExchange = new web3.eth.Contract(uniswapAbi, uniswapAddress);
-  
-  // const inputTokenAddress = inToken; // Replace with the address of the input token, for example DAI
-  // const outputTokenAddress = outToken; // Replace with the address of the output token, for example ETH
-  // const outputAmount = web3.utils.toWei('1', 'ether'); // Replace with the desired output amount in wei, for example 1 ETH
-  
-  // console.log(outputAmount);
-  // const tokenInPrice = await uniswapExchange.methods.getAmountIn(outputAmount, inputTokenAddress, outputTokenAddress).call();
-  
-  // const inputAmount = web3.utils.fromWei(tokenInPrice, 'ether'); // Convert from wei to ether, assuming the input token has 18 decimals
-  // console.log(`Input token amount: ${inputAmount}`);
-  
-  // }
-  // catch(err){
-  //   console.log(err);
-  // }
-  
-  });
-  
+    
+   
+  }
+}
+catch(err){
+  console.log(error)
+  return res.status(400).send(error.message)
+}
+});
 
-var server = app.listen(8082, function() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post("/swapf3ConversionAmount", async (req, res) => {
+  var uri = req.body.uri
+  var inToken = req.body.inToken
+  var outToken = req.body.outToken
+  var input = req.body.input
+ 
+  // console.log(uri  + " " + inToken + " " + outToken);
+
+  try{
+  const web3 = new Web3(uri);
+//const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+  const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+  const pancakeSwapABI = require('./abi.json');
+  const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
+  const inputTokenAddress = inToken;
+  const outputTokenAddress = outToken;
+  const inputAmount = web3.utils.toWei(input , 'ether');
+  const minOutputAmount = web3.utils.toWei('0', 'ether');
+
+  const amounts = await pancakeSwapContract.methods.getAmountsOut(inputAmount, [inputTokenAddress, outputTokenAddress]).call();
+  const estimatedOutputAmount = amounts[1];
+  console.log("Amounts : "+web3.utils.fromWei(estimatedOutputAmount,'ether'))
+
+  const gasPrice = await web3.eth.getGasPrice();
+  const gasFee = web3.utils.toBN(gasPrice).mul(web3.utils.toBN(21000));
+  console.log("Gas fee "+gasFee)
+
+  const estimatedOutputAmountInEth = web3.utils.fromWei(estimatedOutputAmount, 'ether');
+  const gasFeeInEth = web3.utils.fromWei(gasFee, 'ether');
+  const totalCostInEth = parseFloat(estimatedOutputAmountInEth) + parseFloat(gasFeeInEth);
+  console.log(`Estimated output amount: ${estimatedOutputAmountInEth} USDT`);
+  console.log(`Gas fee: ${gasFeeInEth} BNB`);
+  console.log(`Total cost: ${totalCostInEth} BNB`);
+  const result = {
+    estimatedOutputAmount : estimatedOutputAmountInEth,
+    gasFee : gasFeeInEth,
+    totalCost : totalCostInEth
+  }
+return res.status(200).send(result)
+    }
+    catch(err){
+      return res.status(400).send("Wrong Input")
+    }
+
+
+
+
+
+
+
+// try{
+// const Web3 = require('web3');
+// const web3 = new Web3('https://mainnet.infura.io/v3/8f99e25e35fb47be849213a3438a0c14');
+
+// const uniswapAbi = require('./uniswap-abi.json'); // Replace with the path to the ABI file
+// const uniswapAddress = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'; // Replace with the address of the Uniswap exchange on the Ethereum network
+// const uniswapExchange = new web3.eth.Contract(uniswapAbi, uniswapAddress);
+
+// const inputTokenAddress = inToken; // Replace with the address of the input token, for example DAI
+// const outputTokenAddress = outToken; // Replace with the address of the output token, for example ETH
+// const outputAmount = web3.utils.toWei('1', 'ether'); // Replace with the desired output amount in wei, for example 1 ETH
+
+// console.log(outputAmount);
+// const tokenInPrice = await uniswapExchange.methods.getAmountIn(outputAmount, inputTokenAddress, outputTokenAddress).call();
+
+// const inputAmount = web3.utils.fromWei(tokenInPrice, 'ether'); // Convert from wei to ether, assuming the input token has 18 decimals
+// console.log(`Input token amount: ${inputAmount}`);
+
+// }
+// catch(err){
+//   console.log(err);
+// }
+
+});
+
+var server = app.listen(8081, function() {
     var host = server.address().address;
     var port = server.address().port;
     console.log("Example app listening at http://%s:%s", host, port);
 });
+
+
+
 
