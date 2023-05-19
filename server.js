@@ -28,22 +28,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// console.log(JWT_SECRETKEY);
-
-// var connection = mysql.createConnection({
-//     host: '167.172.106.122',
-//     user: 'root',
-//     password: '',
-//     database: 'wallet_data'
-// });
-
-// connection.connect();
-// console.log("Connect");
-
-
-
-
-//////////////Create account & menomic //////////
 app.get('/memonic',async function (req,res) {
   const web3 = new Web3();
   
@@ -646,12 +630,7 @@ const data = {
  console.log(data);
 
  return res.status(200).send(data)
-  // res.setHeader('Content-Type', 'application/json');
-  
-  //   connection.query(`SELECT * FROM wallet_id where phrase = '${a}' `, function (err, result) {
-  //   if (err) throw err;
-  //   res.send(result);
-  // });
+
 })  
 //////////////import account using menomic //////////
 
@@ -732,7 +711,6 @@ app.get('/password',async function (req,res){
 
 /////////////transfer //////////
 app.get('/transfer',async function (req,res){
-// const web3 = new Web3('https://eth-goerli.g.alchemy.com/v2/d3XAlD6RgOfYQmBcWd59GVxLYki-b9bQ');
 var key = req.query.key
 var from = req.query.from
 var to = req.query.to
@@ -756,8 +734,7 @@ console.log(rpc)
 
  var receiptAddress = from
   console.log("wallet address "+receiptAddress)
-  // var amount = req.body.token
-  // console.log("amount "+amount)
+
   const accountSender = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY);
   const receiverAddress = to;
 
@@ -804,761 +781,10 @@ web3.eth.accounts.signTransaction(transactionObject, PRIVATE_KEY)
   catch(err){
     //res.send(err.error.message);
   }
-//   var privateKey = PRIVATE_KEY 
-//   privateKey = "0x".concat(privateKey)
-//   console.log("privateKey "+privateKey)
-//   console.log(rpc)
-//   const abi = [
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "name",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "string"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_upgradedAddress",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "deprecate",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_spender",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "_value",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "approve",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "deprecated",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "bool"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_evilUser",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "addBlackList",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "totalSupply",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_from",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "_to",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "_value",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "transferFrom",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "upgradedAddress",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "balances",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "decimals",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "maximumFee",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "_totalSupply",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [],
-//         "name": "unpause",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "_maker",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "getBlackListStatus",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "bool"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "allowed",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "paused",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "bool"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "who",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "balanceOf",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [],
-//         "name": "pause",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "getOwner",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "owner",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "symbol",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "string"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_to",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "_value",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "transfer",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "newBasisPoints",
-//                 "type": "uint256"
-//             },
-//             {
-//                 "name": "newMaxFee",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "setParams",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "amount",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "issue",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "amount",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "redeem",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "_owner",
-//                 "type": "address"
-//             },
-//             {
-//                 "name": "_spender",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "allowance",
-//         "outputs": [
-//             {
-//                 "name": "remaining",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "basisPointsRate",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [
-//             {
-//                 "name": "",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "isBlackListed",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "bool"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_clearedUser",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "removeBlackList",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": true,
-//         "inputs": [],
-//         "name": "MAX_UINT",
-//         "outputs": [
-//             {
-//                 "name": "",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "view",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "newOwner",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "transferOwnership",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "constant": false,
-//         "inputs": [
-//             {
-//                 "name": "_blackListedUser",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "destroyBlackFunds",
-//         "outputs": [],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "function"
-//     },
-//     {
-//         "inputs": [
-//             {
-//                 "name": "_initialSupply",
-//                 "type": "uint256"
-//             },
-//             {
-//                 "name": "_name",
-//                 "type": "string"
-//             },
-//             {
-//                 "name": "_symbol",
-//                 "type": "string"
-//             },
-//             {
-//                 "name": "_decimals",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "payable": false,
-//         "stateMutability": "nonpayable",
-//         "type": "constructor"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "amount",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "Issue",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "amount",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "Redeem",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "newAddress",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "Deprecate",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "feeBasisPoints",
-//                 "type": "uint256"
-//             },
-//             {
-//                 "indexed": false,
-//                 "name": "maxFee",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "Params",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "_blackListedUser",
-//                 "type": "address"
-//             },
-//             {
-//                 "indexed": false,
-//                 "name": "_balance",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "DestroyedBlackFunds",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "_user",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "AddedBlackList",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": false,
-//                 "name": "_user",
-//                 "type": "address"
-//             }
-//         ],
-//         "name": "RemovedBlackList",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": true,
-//                 "name": "owner",
-//                 "type": "address"
-//             },
-//             {
-//                 "indexed": true,
-//                 "name": "spender",
-//                 "type": "address"
-//             },
-//             {
-//                 "indexed": false,
-//                 "name": "value",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "Approval",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [
-//             {
-//                 "indexed": true,
-//                 "name": "from",
-//                 "type": "address"
-//             },
-//             {
-//                 "indexed": true,
-//                 "name": "to",
-//                 "type": "address"
-//             },
-//             {
-//                 "indexed": false,
-//                 "name": "value",
-//                 "type": "uint256"
-//             }
-//         ],
-//         "name": "Transfer",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [],
-//         "name": "Pause",
-//         "type": "event"
-//     },
-//     {
-//         "anonymous": false,
-//         "inputs": [],
-//         "name": "Unpause",
-//         "type": "event"
-//     }
-//               ];
-
-// // const provider = new JsonRpcProvider("https://bsc.publicnode.com"); // Connect to Ropsten testnet
-// const provider = new JsonRpcProvider(rpc);
-// const wallet = new ethers.Wallet(privateKey, provider);
-// const amountConvert = parseUnits(amount,18)
-// const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, wallet);
-// if(isAddress(receiptAddress)){
-//   try{
-// const tx = await contract.transfer(receiptAddress, amountConvert);
-// console.log('Transaction hash:', tx.hash);
-// const result = {
-//   response : tx.hash
-// }
-//  return res.status(200).send(result)
-// }
-// catch(err){
-//   console.log("Insufficient Funds")
-//   return res.status(401).send("Insufficient Balance")
-// }
-// }
-// else{
-//   console.log("Invalid Address")
-//   const result = {
-//     response : "Invalid Address"
-//   }
-//   return res.status(400).send(result)
-// }
-
-
-
-
-// const nonce = await web3.eth.getTransactionCount(from, "latest");
-
-// var amountto = parseInt(amount);
-//  const transaction = {
-//    to: to,
-//    //  '0x5164F205c6a7f3fEfEe9e7C409012E0F4384c242', // faucet address to return eth
-//    value: amountto,
-//    //  100000000000
-//    gas: 30000,
-//    maxPriorityFeePerGas: 1000000108,
-//    nonce: nonce,
-//    // optional data field to send message or execute smart contract
-//  };
-
-//  const signedTx = await web3.eth.accounts.signTransaction(
-//    transaction,
-//    PRIVATE_KEY
-//  );
-
-//  web3.eth.sendSignedTransaction(
-//    signedTx.rawTransaction,
-//    function (error, hash) {
-//      if (!error) {
-//        // console.log(
-//        //   "🎉 The hash of your transaction is: ",
-//        //   hash,
-//        //   "\n Check Alchemy's Mempool to view the status of your transaction!"
-//        // );
-//       //  alert("🎉 The hash of your transaction is: ",hash, "\n Check Alchemy's Mempool to view the status of your transaction!")
-//       var a = "🎉 The hash of your transaction is: "+hash+"\n Check Alchemy's Mempool to view the status of your transaction!"
-//       console.log(a);
-//       return res.status(200).send(a)
-//      } else {
-//        // console.log(
-//        //   "❗Something went wrong while submitting your transaction:",
-//        //   error
-//        // );
-
-//       //  alert("❗Something went wrong while submitting your transaction:", error);
-//       var b = "❗Something went wrong while submitting your transaction:"+error
-//       console.log(b);
-//       return res.status(200).send(b)
-//      }
-//    }
-//  );
 
 })  
 
-// app.get('/transfertcn',async function (req,res){
+
 //   // const web3 = new Web3('https://eth-goerli.g.alchemy.com/v2/d3XAlD6RgOfYQmBcWd59GVxLYki-b9bQ');
 //   var key = req.query.key
 //   var from = req.query.from
@@ -2400,16 +1626,9 @@ app.get("/transfertcn", async (req, res) => {
         Key: token,
       }
       var privateKey = pkey.Key.privateKey
-//  console.log("Privet Key   "+privateKey);
 
-//   console.log("wallet address  "+receiptAddress)
-//   console.log("recever address "+tadrs)
-//   console.log("amount  "+amount)
   var CONTRACT_ADDRESS = tadrs
-  
-  // privateKey = "0x".concat(privateKey)
-  // console.log("privateKey "+privateKey)
-  // console.log(receiptAddress,privateKey,amount,tokenContractAddress,rpcUrl)
+
   const abi = require("./contract.json")
 
 const provider = new JsonRpcProvider(rpcUrl); // Connect to Ropsten testnet
@@ -2449,96 +1668,6 @@ else{
 }
 });
 
-// app.post("/swapf3", async (req, res) => {
-// console.log('Swap Native to NonNative');
-//   try{
-//   var gass = 371938;
-//   var privateKey = req.body.privateKey;
-//   var amount = req.body.inputAmount;
-//   // privateKey = "0x".concat(privateKey);
-//   console.log(privateKey)
-//   const web3 = new Web3('https://bsc.publicnode.com');
-// //const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
-// const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-// console.log(account.address);
-// const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
-// const pancakeSwapABI = require('./abi.json');
-// const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
-// const inputTokenAddress = req.body.inToken;
-// const outputTokenAddress = req.body.outToken;
-// const inputAmount = web3.utils.toWei(amount, 'ether');
-// const minOutputAmount = web3.utils.toWei('0', 'ether');
-// //// approval part
-// const tokenabi = require('./abif3.json');
-// const tokencontract = new web3.eth.Contract(tokenabi, inputTokenAddress);
-// web3.eth.accounts.wallet.add(privateKey);
-// try{
-// const approves = await tokencontract.methods
-//      .approve(
-//       pancakeSwapAddress,
-//       inputAmount
-//     )
-//    .send({ from: account.address, gasLimit: 275833 });
-//     console.log(approves.transactionHash)
-//   }
-//   catch(err){
-//    return res.status(401).send("Insufficient funds");
-
-//   }
-// /////
-// console.log(inputAmount,minOutputAmount)
-
-// const swapData = pancakeSwapContract.methods.swapExactTokensForTokens(
-//     inputAmount,
-//     minOutputAmount,
-//     [inputTokenAddress, outputTokenAddress],
-//     account.address,
-//     Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
-//   ).encodeABI();
-
-
-//   var block = await web3.eth.getBlock("latest");
-
-// var gasLimit = Math.round(block.gasLimit / block.transactions.length);
-// // console.log(block,gasLimit)
-// var tx = {
-//     gas: gasLimit,
-//     to: pancakeSwapAddress,
-//     data: swapData
-// }
-// web3.eth.accounts.wallet.add(privateKey);
-//   try{
-//    const swapTransaction = await pancakeSwapContract.methods
-//      .swapExactTokensForTokens(
-//        inputAmount,
-//        minOutputAmount,
-//        [inputTokenAddress,outputTokenAddress],
-//        account.address,
-//        Date.now() + 1000 * 60 * 10 // set to expire after 10 minutes
-//     )
-//    .send({ from: account.address, gasLimit: gass });
-//   console.log(swapTransaction.transactionHash)
-//     res.status(200).send("Swap Successful")
-//      }
-//      catch(error){
-//       console.log("error hai",error)
-//       return res.status(401).send("Insufficient Funds")
-//      }
-//     }
-//     catch(err){
-//       return res.status(400).send("Insufficient Funds")
-//     }
-
-// })
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2550,12 +1679,11 @@ app.post("/swap2token", async (req, res) => {
     var gass = 371938;
     var privateKey = req.body.privateKey;
     var amount = req.body.inputAmount;
-    // privateKey = "0x".concat(privateKey);
-    // console.log(privateKey)
+
     const web3 = new Web3('https://bsc.publicnode.com');
-  //const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+ 
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-  // console.log(account.address);
+
   const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
   const pancakeSwapABI = require('./abi.json');
   const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
@@ -2647,7 +1775,7 @@ app.post("/nonNativetoNative", async (req, res) => {
   // const Ammount = web3.utils.toWei(input , 'ether');
   var gass = 275833;
   
-  // var addressFrom = '0x9767c8E438Aa18f550208e6d1fDf5f43541cC2c8'
+
   
   if(addressTo === '0xa03110800894b3CcF8723D991d80875561F96777'){
     gass = 1284404;
@@ -2667,16 +1795,15 @@ app.post("/nonNativetoNative", async (req, res) => {
   {
   var privateKey = Key;
   var amount = Ammount;
-  // privateKey = "0x".concat(privateKey);
+
   const web3 = new Web3(Url);
-  // const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
   console.log("Account Address " +account.address);
   const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
   const pancakeSwapABI = require('./abi.json');
   const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
-  // const inputTokenAddress = req.body.inToken;
-  // const outputTokenAddress = req.body.outToken;
+
   const inputAmount = web3.utils.toWei(amount, 'ether');
   const minOutputAmount = web3.utils.toWei(amount, 'ether');
   //// approval part
@@ -2772,11 +1899,11 @@ app.post("/swapf3ConversionAmount", async (req, res) => {
   var outToken = req.body.outToken
   var input = req.body.input
  
-  // console.log(uri  + " " + inToken + " " + outToken);
+
 
   try{
   const web3 = new Web3(uri);
-//const privateKey = '0xa2ee5a60a7a875b4647349edc04b9443c488b5ba614bbcee99360813e1323bd5';
+
   const pancakeSwapAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
   const pancakeSwapABI = require('./abi.json');
   const pancakeSwapContract = new web3.eth.Contract(pancakeSwapABI, pancakeSwapAddress);
@@ -2810,34 +1937,6 @@ return res.status(200).send(result)
       return res.status(400).send("Wrong Input")
     }
 
-
-
-
-
-
-
-// try{
-// const Web3 = require('web3');
-// const web3 = new Web3('https://mainnet.infura.io/v3/8f99e25e35fb47be849213a3438a0c14');
-
-// const uniswapAbi = require('./uniswap-abi.json'); // Replace with the path to the ABI file
-// const uniswapAddress = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'; // Replace with the address of the Uniswap exchange on the Ethereum network
-// const uniswapExchange = new web3.eth.Contract(uniswapAbi, uniswapAddress);
-
-// const inputTokenAddress = inToken; // Replace with the address of the input token, for example DAI
-// const outputTokenAddress = outToken; // Replace with the address of the output token, for example ETH
-// const outputAmount = web3.utils.toWei('1', 'ether'); // Replace with the desired output amount in wei, for example 1 ETH
-
-// console.log(outputAmount);
-// const tokenInPrice = await uniswapExchange.methods.getAmountIn(outputAmount, inputTokenAddress, outputTokenAddress).call();
-
-// const inputAmount = web3.utils.fromWei(tokenInPrice, 'ether'); // Convert from wei to ether, assuming the input token has 18 decimals
-// console.log(`Input token amount: ${inputAmount}`);
-
-// }
-// catch(err){
-//   console.log(err);
-// }
 
 });
 
